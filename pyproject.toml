@@ -8,7 +8,7 @@ version = "1.0"
 description = "Liouss' Python Toolkit"
 readme = "README.md"
 requires-python = ">=3.8"
-dependencies = []
+    dependencies = []
 
 [tool.setuptools]
 package-dir = {"" = "src"}
