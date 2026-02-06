@@ -16,14 +16,6 @@ except:
     pass
 
 
-term_width = shutil.get_terminal_size().columns
-
-def handle_resize(signum, frame):
-    global term_width
-    term_width = shutil.get_terminal_size().columns
-
-signal.signal(signal.SIGWINCH, handle_resize)
-
 ############################################
 ##::::::::::::::::::::::::::::::::::::::::##
 ##::                                    ::##
@@ -77,6 +69,9 @@ def beautiful_print(*values: object,
                     no_log_ffs=False,
                     **params):
     
+    size = shutil.get_terminal_size(fallback=(80, 24))
+    cols, lines = size.columns, size.lines
+    
     if not is_mod_enabled(mod):
         return
     
@@ -114,15 +109,15 @@ def beautiful_print(*values: object,
             values3.append(val)
         values2 = values3
         
-    values2 = tuple(values2)
-
+    values2 = (" ".join([str(s) for s in values2]))[:cols-1]
+    
     if not log_only:
         if go_up > 0:
             with lock:
-                print(*values2, end='\r', flush=True, **params)
+                print(values2, end='\r', flush=True, **params)
         else:
             with lock:
-                print(*values2, flush=True, **params)
+                print(values2, flush=True, **params)
     
     if not no_log_ffs:      
         log = log or is_mod_enabled(_ALWAYS_LOG_MOD_KEY) and "last_logs.txt"
@@ -130,7 +125,6 @@ def beautiful_print(*values: object,
             try:
                 now = datetime.datetime.now()
                 with open(log, "a", encoding="utf-8") as log_file:
-                    values2 = " ".join([str(s) for s in values])
                     if show_date:
                         log_file.write(f"{str(values2)}\n")
                     else:
@@ -267,7 +261,7 @@ def print_progressbar(current : float,
         
     to_print = pre_string + progress + post_string
     
-    beautiful_print(to_print+RESET_COLOR, color=RESET_COLOR, go_up=go_up, max_char=term_width, no_log_ffs=True)
+    beautiful_print(to_print+RESET_COLOR, color=RESET_COLOR, go_up=go_up, no_log_ffs=True)
 
 ##################
 
