@@ -29,6 +29,7 @@ _DEBUG_MOD_KEY = "debug"
 _SHOW_DATE_MOD_KEY = "show_date"
 _ALWAYS_LOG_MOD_KEY = "always_log"
 
+
 _ALWAYS_LOG_FILE = "last_logs.txt"
 
 ###### COLORS
