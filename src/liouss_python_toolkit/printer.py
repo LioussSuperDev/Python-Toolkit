@@ -29,6 +29,8 @@ _DEBUG_MOD_KEY = "debug"
 _SHOW_DATE_MOD_KEY = "show_date"
 _ALWAYS_LOG_MOD_KEY = "always_log"
 
+_ALWAYS_LOG_FILE = "last_logs.txt"
+
 ###### COLORS
 
 RESET_COLOR = "\33[0m"
@@ -120,7 +122,7 @@ def beautiful_print(*values: object,
                 print(values2, flush=True, **params)
     
     if not no_log_ffs:      
-        log = log or is_mod_enabled(_ALWAYS_LOG_MOD_KEY) and "last_logs.txt"
+        log = log or is_mod_enabled(_ALWAYS_LOG_MOD_KEY) and _ALWAYS_LOG_FILE
         if log:
             try:
                 now = datetime.datetime.now()
@@ -184,8 +186,11 @@ def debug_print(*values: object):
 def always_show_date(enable=True):
     enable_mod(_SHOW_DATE_MOD_KEY) if enable else disable_mod(_SHOW_DATE_MOD_KEY)
     
-def always_log(enable=True):
+def always_log(enable=True, log_file="last_logs.txt"):
     enable_mod(_ALWAYS_LOG_MOD_KEY) if enable else disable_mod(_ALWAYS_LOG_MOD_KEY)
+    global _ALWAYS_LOG_FILE
+    _ALWAYS_LOG_FILE = log_file
+    
 ####################
 
 

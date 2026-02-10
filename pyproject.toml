@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "liouss-python-toolkit"
-version = "1.0"
+version = "1.01"
 description = "Liouss' Python Toolkit"
 readme = "README.md"
 requires-python = ">=3.8"
