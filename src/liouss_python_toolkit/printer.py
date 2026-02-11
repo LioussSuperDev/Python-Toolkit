@@ -60,12 +60,13 @@ def _str_move_cursor_up(n:int):
 def _str_move_cursor_down(n:int):
     return "\033["+str(n)+"B"
 
+
 def beautiful_print(*values: object,
                     color:Optional[str]=None,
                     erase_current_line:bool=True,
                     go_up:int=0,
                     mod=None,
-                    max_char=-1,
+                    max_char=True,
                     log=None,
                     log_only=False,
                     show_date=False,
@@ -100,27 +101,16 @@ def beautiful_print(*values: object,
     
     if go_up > 0:
         values2[-1] = str(values2[-1]) + _str_move_cursor_down(go_up)
-    
-    if max_char > 0:
-        values3 = []
-        size = 0
-        for val in values2:
-            size += len(val) + 1
-            if size >= max_char:
-                values3.append(val[:-(max_char-size+1)])
-                break
-            values3.append(val)
-        values2 = values3
         
-    values2 = (" ".join([str(s) for s in values2]))[:cols-1]
+    values2 = (" ".join([str(s) for s in values2]))
     
     if not log_only:
         if go_up > 0:
             with lock:
-                print(values2, end='\r', flush=True, **params)
+                print(values2[:cols-1] if max_char else values2, end='\r', flush=True, **params)
         else:
             with lock:
-                print(values2, flush=True, **params)
+                print(values2[:cols-1] if max_char else values2, flush=True, **params)
     
     if not no_log_ffs:      
         log = log or is_mod_enabled(_ALWAYS_LOG_MOD_KEY) and _ALWAYS_LOG_FILE
