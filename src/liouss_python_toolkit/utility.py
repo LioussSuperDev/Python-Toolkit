@@ -45,3 +45,10 @@ def edit_in_editor(initial_text: str = "", ignore_lines=0, path=None) -> str:
                 path.unlink(missing_ok=True)
         except Exception:
             pass
+
+def real_path(path_str: str) -> str:
+    return str(
+        Path(path_str.strip('"').strip("'"))
+        .expanduser()
+        .resolve(strict=False)
+    )
