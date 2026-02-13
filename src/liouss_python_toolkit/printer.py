@@ -80,13 +80,16 @@ def beautiful_print(*values: object,
         return
     
     values2 = list([str(s) for s in values])
+    values3 = list([str(s) for s in values])
     show_date = show_date or is_mod_enabled(_SHOW_DATE_MOD_KEY)
     if show_date:
         now = datetime.datetime.now()
         values2.insert(0, f"[{now}]")
+        values3.insert(0, f"[{now}]")
     
     if len(values2) == 0:
         values2.append("")
+        values3.append("")
     
     if erase_current_line:
         values2[0] = ERASE_LINE_COLOR + str(values2[0])
@@ -103,6 +106,7 @@ def beautiful_print(*values: object,
         values2[-1] = str(values2[-1]) + _str_move_cursor_down(go_up)
         
     values2 = (" ".join([str(s) for s in values2]))
+    values3 = (" ".join([str(s) for s in values3]))
     
     if not log_only:
         if go_up > 0:
@@ -119,9 +123,9 @@ def beautiful_print(*values: object,
                 now = datetime.datetime.now()
                 with open(log, "a", encoding="utf-8") as log_file:
                     if show_date:
-                        log_file.write(f"{str(values2)}\n")
+                        log_file.write(f"{str(values3)}\n")
                     else:
-                        log_file.write(f"[{now}] {str(values2)}\n")
+                        log_file.write(f"[{now}] {str(values3)}\n")
                         
                     log_file.flush()
             except Exception:
