@@ -15,12 +15,6 @@ try:
 except:
     pass
 
-try:
-    from colorama import just_fix_windows_console
-    just_fix_windows_console()
-except ImportError:
-    pass
-
 
 ############################################
 ##::::::::::::::::::::::::::::::::::::::::##
@@ -72,7 +66,7 @@ def beautiful_print(*values: object,
                     erase_current_line:bool=True,
                     go_up:int=0,
                     mod=None,
-                    max_char=True,
+                    max_char=False,
                     log=None,
                     log_only=False,
                     show_date=False,
@@ -267,7 +261,7 @@ def print_progressbar(current : float,
         
     to_print = pre_string + progress + post_string
     
-    beautiful_print(to_print+RESET_COLOR, color=RESET_COLOR, go_up=go_up, no_log_ffs=True)
+    beautiful_print(to_print+RESET_COLOR, color=RESET_COLOR, go_up=go_up, max_char=True, no_log_ffs=True)
 
 ##################
 
